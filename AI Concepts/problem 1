@@ -1,0 +1,24 @@
+def two_sum(nums, target):
+
+
+  seen = {}
+  for i, num in enumerate(nums):
+    complement = target - num
+    if complement in seen:
+      return [seen[complement], i]
+    seen[num] = i
+  return []
+
+num_list_str = input("Enter list of integers (comma-separated): ")
+num_list = [int(num) for num in num_list_str.split(",")]
+
+target_str = input("target value: ")
+target = int(target_str)
+
+result = two_sum(num_list, target)
+
+if result:
+ 
+  print(f" Output : [{result[0]} {result[1]}]")
+else:
+  print(f"No two numbers in the list add up to {target}")
