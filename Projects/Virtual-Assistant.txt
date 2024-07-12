@@ -1,0 +1,206 @@
+# Action part code
+
+import datetime
+import speak
+import webbrowser
+import weather
+import os
+
+
+
+
+def Action(send) :   
+  
+    data_btn  = send.lower()
+
+    if "what is your name" in   data_btn :
+      speak.speak("my name is Desktop Voice Assistant . ")  
+      return "my name is Desktop Voice Assistant "
+
+    elif "how made you" in  data_btn :
+            speak.speak("My creator name is MD Dulal Hossain. Id 213902116. Batch 213. Department of CSE. Green University of Bangladesh") 
+            return "My creator name is MD Dulal Hossain. Id 213902116. Batch 213. Department of CSE. Green University of Bangladesh"   
+
+   elif "how design you" in  data_btn :
+            speak.speak("My creator name is MD Dulal Hossain. Id 213902116. Batch 213. Department of CSE. Green University of Bangladesh") 
+            return "My creator name is MD Dulal Hossain. Id 213902116. Batch 213. Department of CSE. Green University of Bangladesh" 
+
+    elif "hello" in data_btn  or "hye" in data_btn  or "hay" in data_btn: 
+        speak.speak("Hey sir, How i can  help you !")  
+        return "Hey sir, How i can  help you !" 
+
+    elif "how are you" in  data_btn :
+            speak.speak("I am doing great these days sir") 
+            return "I am doing great these days sir"   
+
+    elif "thanku" in data_btn or "thank" in data_btn:
+           speak.speak("its my pleasure sir to stay with you")
+           return "its my pleasure sir to stay with you"      
+
+    elif "good morning" in data_btn:
+           speak.speak("Good morning sir, i think you might need some help")
+           return "Good morning sir, i think you might need some help"   
+
+    elif "time now" in data_btn:
+          current_time = datetime.datetime.now()
+          Time = (str)(current_time.hour)+ " Hour : ", (str)(current_time.minute) + " Minute" 
+          speak.speak(Time)
+          return str(Time) 
+
+    elif "shutdown" in data_btn or "quit" in data_btn:
+            speak.speak("ok sir")
+            return "ok sir"  
+
+    elif "play music" in data_btn or "song" in data_btn:
+        webbrowser.open("https://gaana.com/")   
+        speak.speak("gaana.com is now ready for you, enjoy your music")                   
+        return "gaana.com is now ready for you, enjoy your music"
+
+
+    elif 'open google' in data_btn or 'google'  in data_btn:
+        url = 'https://google.com/'
+        webbrowser.get().open(url)
+        speak.speak("google open")  
+        return "google open"
+
+    elif 'open wikipedia website' in data_btn or 'open wikipedia'  in data_btn:
+        url = 'https://www.wikipedia.org/'
+        webbrowser.get().open(url)
+        speak.speak("wikipedia open")  
+        return "wikipedia open"
+
+    elif 'green university website' in data_btn or 'university website'  in data_btn:
+        url = 'https://green.edu.bd/'
+        webbrowser.get().open(url)
+        speak.speak(" open university website ")  
+        return "open university website"
+
+    elif 'open my university website' in data_btn or 'open university website'  in data_btn:
+        url = 'https://green.edu.bd/'
+        webbrowser.get().open(url)
+        speak.speak(" my university website ")  
+        return "my university website"
+
+    elif 'open my department website' in data_btn or 'open department website'  in data_btn:
+        url = 'https://cse.green.edu.bd/'
+        webbrowser.get().open(url)
+        speak.speak(" open department website ")  
+        return "open department website"
+
+    elif 'open university portal' in data_btn or 'open portal'  in data_btn:
+        url = 'https://studentportal.green.edu.bd/Account/login?ReturnUrl=%2F'
+        webbrowser.get().open(url)
+        speak.speak("open portal")  
+        return "open portal"
+
+    elif 'open university library' in data_btn or 'open library'  in data_btn:
+        url = 'https://library.green.edu.bd/'
+        webbrowser.get().open(url)
+        speak.speak("open library")  
+        return "open library"
+
+    elif 'youtube' in data_btn or "open youtube" in  data_btn:
+        url = 'https://youtube.com/'
+        webbrowser.get().open(url)
+        speak.speak("YouTube open") 
+        return "YouTube open"    
+    
+    elif 'weather' in data_btn :
+       ans   = weather.Weather()
+       speak.speak(ans) 
+       return ans
+
+    elif 'music from my laptop' in data_btn:
+        url = 'D:\\music' 
+        songs = os.listdir(url)
+        os.startfile(os.path.join(url, songs[0]))
+        speak.speak("songs playing...")
+        return "songs playing..." 
+
+    else :
+        speak.speak( "i'm able to understand!")
+        return "i'm able to understand!"   
+
+
+
+
+
+
+
+
+
+
+
+
+
+#  speak code  part 
+  
+# pip install pyttsx3
+
+import pyttsx3
+def speak(text):
+    engine = pyttsx3.init()
+    rate = engine.getProperty('rate')
+    engine.setProperty('rate', rate-70)
+    engine.say(text)
+    engine.runAndWait()
+
+
+
+
+
+
+
+
+
+#spech_to_text code part
+
+import speech_recognition as sr 
+from requests_html import HTMLSession
+import speak
+
+
+def spech_to_text():
+    r =  sr.Recognizer()
+    with sr.Microphone() as source:
+      audio = r.listen(source) # methord 
+      voice_data = ''
+      try:
+        voice_data = r.recognize_google(audio)
+        return voice_data
+
+      except sr.UnknownValueError:
+             speak.speak("sorry")
+      except sr.RequestError:
+            speak.speak('No internet connect please turn on you internet')  
+
+
+
+
+
+#weather code part
+
+# my user agent is : Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36
+# print(r.html.find('title' , first= True).text) 
+# requests-html==0.10.0
+# lxml==4.9.1 (first install  this one)
+
+from requests_html import HTMLSession
+import spech_to_text
+
+def Weather():
+    s  =  HTMLSession()
+    query = "Dhaka"
+    url = f'https://www.google.com/search?q=weather+{query}'
+    r  = s.get(url , headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36'})
+
+    temp  = r.html.find('span#wob_tm' , first= True).text
+    unit = r.html.find('div.vk_bk.wob-unit span.wob_t' , first= True).text
+    desc  = r.html.find('span#wob_dc' , first= True).text
+    return temp+" "+unit+" "+ desc
+
+
+
+
+
+write the  Discussion  for this project , write in 120 words
