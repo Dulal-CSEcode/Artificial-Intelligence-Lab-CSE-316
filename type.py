@@ -1,0 +1,5 @@
+x=str(4)
+y=("Dulal")
+print(x)
+#print(y)
+print(type(x))
