@@ -1,17 +1,3 @@
-
-def bfs(graph, start):
-    queue = [start]
-    visited = set([start])
-
-    while queue:
-        vertex = queue.pop(0)
-        print(vertex)
-
-        for neighbor in graph[vertex]:
-            if neighbor not in visited:
-                queue.append(neighbor)
-                visited.add(neighbor)
-
 graph = {
     'S': ['A', 'B', 'C'],
     'A': ['D'],
